@@ -6,19 +6,6 @@ return {
         opt = {
           pumblend = 15,
           winblend = 15,
-        },
-      },
-    },
-  },
-}
-return {
-  {
-    "AstroNvim/astrocore",
-    opts = {
-      options = {
-        opt = {
-          pumblend = 15,
-          winblend = 15,
           termguicolors = true,
         },
       },
