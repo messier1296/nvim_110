@@ -52,6 +52,9 @@ vim.keymap.set("i","jj","<Esc>",{noremap = true,silent = true})
 vim.keymap.set("n", "<leader>t", "<cmd>Neotree toggle<CR>")
 vim.keymap.set("n", "<C-m>", "<cmd>Neotree reveal<CR>")
 vim.keymap.set("n", "<leader>b", "<cmd>Neotree float buffers<CR>")
+vim.keymap.set("n", "<leader>t", "<Cmd>botright 18split | terminal<CR>", {
+  desc = "Open terminal in 18-line split",
+})
 vim.opt.wrap = true
 vim.opt.fileformats = { "unix", "dos", "mac" }
 vim.keymap.set("t","<Esc>",[[<C-\><C-n>]], {noremap = true,silent = true})
@@ -96,3 +99,19 @@ if zenhan ~= "" then
     end,
   })
 end
+vim.opt.termguicolors = true
+vim.opt.pumblend = 15
+vim.opt.winblend = 15
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.rs",
+    callback = function()
+      vim.lsp.buf.format({ async = false })
+    end,
+  })
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
