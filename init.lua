@@ -49,9 +49,9 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
 })
 
 vim.keymap.set("i","jj","<Esc>",{noremap = true,silent = true})
-vim.keymap.set("n", "<leader>t", "<cmd>Neotree toggle<CR>")
-vim.keymap.set("n", "<C-m>", "<cmd>Neotree reveal<CR>")
-vim.keymap.set("n", "<leader>b", "<cmd>Neotree float buffers<CR>")
+vim.keymap.set("n", "<leader>T", "<cmd>Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
+vim.keymap.set("n", "<C-m>", "<cmd>Neotree reveal<CR>", { desc = "Reveal current file in Neo-tree" })
+vim.keymap.set("n", "<leader>b", "<cmd>Neotree float buffers<CR>", { desc = "Open Neo-tree buffers" })
 vim.keymap.set("n", "<leader>t", "<Cmd>botright 18split | terminal<CR>", {
   desc = "Open terminal in 18-line split",
 })
@@ -115,3 +115,15 @@ vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.g.clipboard = {
+  name = "win32yank-wsl",
+  copy = {
+    ["+"] = "/home/hayato/.local/bin/win32yank.exe -i --crlf",
+    ["*"] = "/home/hayato/.local/bin/win32yank.exe -i --crlf",
+  },
+  paste = {
+    ["+"] = "/home/hayato/.local/bin/win32yank.exe -o --lf",
+    ["*"] = "/home/hayato/.local/bin/win32yank.exe -o --lf",
+  },
+  cache_enabled = 0,
+}

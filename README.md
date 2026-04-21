@@ -193,3 +193,6 @@ Manage and update plugins from inside Neovim.
 ```
 
 If something breaks, start with `:Lazy health` and `:checkhealth`.
+
+
+
