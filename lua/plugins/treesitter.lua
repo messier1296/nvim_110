@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- Customize Treesitter
 -- --------------------
 -- Treesitter customizations are handled with AstroCore
@@ -16,7 +14,10 @@ return {
       auto_install = true, -- enable/disable automatic installation of detected languages
       ensure_installed = {
         "lua",
+        "python",
+        "toml",
         "vim",
+        "yaml",
         -- add more arguments for adding more treesitter parsers
       },
     },
