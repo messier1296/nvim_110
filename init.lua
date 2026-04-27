@@ -34,21 +34,38 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.mouse = "a"
 vim.opt.clipboard = "unnamedplus"
-vim.keymap.set("n", "<leader>ev", "<cmd>edit $MYVIMRC<CR>", { desc = "Open init.lua" })
-vim.keymap.set("n", "<leader>sv", "<cmd>source $MYVIMRC<CR>", { desc = "Source init.lua" })
-vim.diagnostic.config({
+vim.o.list = true
+vim.o.listchars = "tab:» ,trail:·,nbsp:+"
+vim.diagnostic.config {
   update_in_insert = true,
-  virtual_text = true,
+  virtual_text = false,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "",
+      [vim.diagnostic.severity.HINT] = "",
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticLineNrError",
+      [vim.diagnostic.severity.WARN] = "DiagnosticLineNrWarn",
+      [vim.diagnostic.severity.INFO] = "DiagnosticLineNrInfo",
+      [vim.diagnostic.severity.HINT] = "DiagnosticLineNrHint",
+    },
+    linehl = {},
+  },
   underline = true,
-  signs = true,
-})
+  severity_sort = true,
+  float = { border = "rounded" },
+}
 
 vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
   pattern = "*",
   command = "silent update",
 })
 
-vim.keymap.set("i","jj","<Esc>",{noremap = true,silent = true})
+vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
+vim.keymap.set("i", "<C-c>", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>T", "<cmd>Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
 vim.keymap.set("n", "<C-m>", "<cmd>Neotree reveal<CR>", { desc = "Reveal current file in Neo-tree" })
 vim.keymap.set("n", "<leader>b", "<cmd>Neotree float buffers<CR>", { desc = "Open Neo-tree buffers" })
@@ -57,7 +74,7 @@ vim.keymap.set("n", "<leader>t", "<Cmd>botright 18split | terminal<CR>", {
 })
 vim.opt.wrap = true
 vim.opt.fileformats = { "unix", "dos", "mac" }
-vim.keymap.set("t","<Esc>",[[<C-\><C-n>]], {noremap = true,silent = true})
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
@@ -66,9 +83,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function(args)
     local buf = args.buf
 
-    if vim.bo[buf].buftype ~= "" or not vim.bo[buf].modifiable then
-      return
-    end
+    if vim.bo[buf].buftype ~= "" or not vim.bo[buf].modifiable then return end
 
     local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
     local changed = false
@@ -81,52 +96,33 @@ vim.api.nvim_create_autocmd("BufWritePre", {
       end
     end
 
-    if changed then
-      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-    end
+    if changed then vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines) end
 
     vim.bo[buf].fileformat = "unix"
   end,
 })
-local zenhan = vim.fn.exepath("zenhan")
+local zenhan = vim.fn.exepath "zenhan"
+if zenhan == "" then zenhan = vim.fn.exepath "zenhan.exe" end
 if zenhan ~= "" then
   local group = vim.api.nvim_create_augroup("WslZenhan", { clear = true })
 
   vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineLeave" }, {
     group = group,
-    callback = function()
-      vim.fn.system({ zenhan, "0" })
-    end,
+    callback = function() vim.fn.system { zenhan, "0" } end,
   })
 end
 vim.opt.termguicolors = true
 vim.opt.pumblend = 15
 vim.opt.winblend = 15
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.rs",
-    callback = function()
-      vim.lsp.buf.format({ async = false })
-    end,
-  })
+  pattern = "*.rs",
+  callback = function() vim.lsp.buf.format { async = false } end,
+})
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
 vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-vim.g.clipboard = {
-  name = "win32yank-wsl",
-  copy = {
-    ["+"] = "/home/hayato/.local/bin/win32yank.exe -i --crlf",
-    ["*"] = "/home/hayato/.local/bin/win32yank.exe -i --crlf",
-  },
-  paste = {
-    ["+"] = "/home/hayato/.local/bin/win32yank.exe -o --lf",
-    ["*"] = "/home/hayato/.local/bin/win32yank.exe -o --lf",
-  },
-  cache_enabled = 0,
-}
 
 local mode_color = {
   n = { bg = "#0969b0" },
