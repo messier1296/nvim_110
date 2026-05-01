@@ -5,7 +5,7 @@ return {
       local lspconfig = require "lspconfig"
       local util = require "lspconfig.util"
       local function resolve_typst_root(fname)
-        return util.root_pattern("typst.toml", ".git", ".codex")(fname)
+        return util.root_pattern("typst.toml", ".git", "template.typ")(fname)
           or vim.fs.dirname(vim.fn.fnamemodify(fname, ":p"))
       end
 
@@ -33,7 +33,7 @@ return {
     opts = function()
       local util = require "lspconfig.util"
       local function resolve_typst_root(path)
-        return util.root_pattern("typst.toml", ".git", ".codex")(path)
+        return util.root_pattern("typst.toml", ".git", "template.typ")(path)
           or vim.fs.dirname(vim.fn.fnamemodify(path, ":p"))
       end
 
