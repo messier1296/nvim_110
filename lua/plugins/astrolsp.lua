@@ -11,7 +11,7 @@ return {
     -- Configuration table of features provided by AstroLSP
     features = {
       codelens = true, -- enable/disable codelens refresh on start
-      inlay_hints = false, -- enable/disable inlay hints on start
+      inlay_hints = true, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
@@ -37,12 +37,21 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
+      "astro",
       "basedpyright",
       "ruff",
+      "ts_ls",
     },
     -- customize language server configuration passed to `vim.lsp.config`
     -- client specific configuration can also go in `lsp/` in your configuration root (see `:h lsp-config`)
     config = {
+      astro = {
+        init_options = {
+          typescript = {
+            tsdk = vim.fn.stdpath "data" .. "/mason/packages/typescript-language-server/node_modules/typescript/lib",
+          },
+        },
+      },
       basedpyright = {
         settings = {
           basedpyright = {
@@ -72,6 +81,49 @@ return {
           },
         },
       },
+      ts_ls = {
+        init_options = {
+          preferences = {
+            includeCompletionsForImportStatements = true,
+            includeCompletionsForModuleExports = true,
+            includeCompletionsWithClassMemberSnippets = true,
+            includeCompletionsWithInsertText = true,
+            includeCompletionsWithObjectLiteralMethodSnippets = true,
+            includeCompletionsWithSnippetText = true,
+            includePackageJsonAutoImports = "auto",
+          },
+        },
+        settings = {
+          javascript = {
+            inlayHints = {
+              enumMemberValues = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "all" },
+              parameterTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              variableTypes = { enabled = true },
+            },
+            preferences = {
+              importModuleSpecifier = "non-relative",
+              includePackageJsonAutoImports = "auto",
+            },
+          },
+          typescript = {
+            inlayHints = {
+              enumMemberValues = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "all" },
+              parameterTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              variableTypes = { enabled = true },
+            },
+            preferences = {
+              importModuleSpecifier = "non-relative",
+              includePackageJsonAutoImports = "auto",
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -80,10 +132,16 @@ return {
 
       -- the key is the server that is being setup with `vim.lsp.config`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
+      astro = function(server)
+        require("astrolsp").lsp_setup(server)
+      end,
       basedpyright = function(server)
         require("astrolsp").lsp_setup(server)
       end,
       ruff = function(server)
+        require("astrolsp").lsp_setup(server)
+      end,
+      ts_ls = function(server)
         require("astrolsp").lsp_setup(server)
       end,
     },

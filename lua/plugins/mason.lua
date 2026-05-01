@@ -10,9 +10,11 @@ return {
       -- Make sure to use the names found in `:Mason`
       ensure_installed = {
         -- install language servers
+        "astro-language-server",
         "lua-language-server",
         "basedpyright",
         "ruff",
+        "typescript-language-server",
 
         -- install formatters
         "stylua",

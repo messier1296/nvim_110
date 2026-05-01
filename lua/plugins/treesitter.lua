@@ -13,8 +13,15 @@ return {
       indent = true, -- enable/disable treesitter based indentation
       auto_install = true, -- enable/disable automatic installation of detected languages
       ensure_installed = {
+        "astro",
+        "css",
+        "html",
+        "javascript",
+        "json",
         "lua",
         "python",
+        "tsx",
+        "typescript",
         "toml",
         "vim",
         "yaml",
