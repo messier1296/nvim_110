@@ -14,6 +14,7 @@ return {
         "lua-language-server",
         "basedpyright",
         "ruff",
+        "rust-analyzer",
         "typescript-language-server",
 
         -- install formatters

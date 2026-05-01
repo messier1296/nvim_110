@@ -23,6 +23,7 @@ return {
           -- "go",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
+          "rust",
           -- "python",
         },
       },
@@ -132,18 +133,6 @@ return {
 
       -- the key is the server that is being setup with `vim.lsp.config`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
-      astro = function(server)
-        require("astrolsp").lsp_setup(server)
-      end,
-      basedpyright = function(server)
-        require("astrolsp").lsp_setup(server)
-      end,
-      ruff = function(server)
-        require("astrolsp").lsp_setup(server)
-      end,
-      ts_ls = function(server)
-        require("astrolsp").lsp_setup(server)
-      end,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {

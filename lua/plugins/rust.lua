@@ -17,27 +17,106 @@ return {
           end,
           default_settings = {
             ["rust-analyzer"] = {
-              check = {
+              checkOnSave = {
                 command = "clippy",
+                extraArgs = { "--all", "--", "-W", "clippy::all" },
               },
               cargo = {
                 allFeatures = true,
+                loadOutDirsFromCheck = true,
+                buildScripts = { enable = true },
+              },
+              procMacro = {
+                enable = true,
+                attributes = { enable = true },
               },
               inlayHints = {
-                typeHints = {
+                enable = true,
+                chainingHints = { enable = true },
+                typeHints = { enable = true, hideClosureInitialization = true },
+                parameterHints = { enable = true },
+                closureReturnTypeHints = { enable = "with_block" },
+                lifetimeElisionHints = { enable = "skip_trivial", useParameterNames = true },
+                maxLength = 25,
+                bindingModeHints = { enable = true },
+                closureCaptureHints = { enable = true },
+                discriminantHints = { enable = "fieldless" },
+                expressionAdjustmentHints = { enable = "reborrow" },
+                rangeExclusiveHints = { enable = true },
+              },
+              completion = {
+                autoimport = { enable = true },
+                postfix = { enable = true },
+                callable = { snippets = "fill_arguments" },
+                fullFunctionSignatures = { enable = true },
+                privateEditable = { enable = true },
+              },
+              imports = {
+                granularity = { group = "module" },
+                prefix = "self",
+              },
+              diagnostics = {
+                enable = true,
+                experimental = { enable = true },
+                styleLints = { enable = true },
+              },
+              semanticHighlighting = {
+                operator = { specialization = { enable = true } },
+                punctuation = { enable = true, specialization = { enable = true } },
+                strings = { enable = true },
+              },
+              hover = {
+                actions = {
                   enable = true,
+                  references = { enable = true },
+                  run = { enable = true },
+                  debug = { enable = true },
+                  gotoTypeDef = { enable = true },
+                  implementations = { enable = true },
                 },
-                parameterHints = {
+                documentation = { enable = true, keywords = { enable = true } },
+                links = { enable = true },
+              },
+              typing = {
+                autoClosingAngleBrackets = { enable = true },
+              },
+              lens = {
+                enable = true,
+                references = {
                   enable = true,
+                  adt = { enable = true },
+                  enumVariant = { enable = true },
+                  method = { enable = true },
+                  trait = { enable = true },
                 },
-                chainingHints = {
-                  enable = true,
-                },
+                implementations = { enable = true },
+                run = { enable = true },
+                debug = { enable = true },
+              },
+              workspace = {
+                symbol = { search = { kind = "all_symbols" } },
+              },
+              check = {
+                command = "clippy",
+                extraArgs = { "--all", "--", "-W", "clippy::all" },
               },
             },
           },
         },
       }
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    opts = function(_, opts)
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      opts.formatters_by_ft.rust = { "rustfmt", lsp_format = "fallback" }
+      opts.format_on_save = function(bufnr)
+        if vim.bo[bufnr].filetype == "rust" then
+          return { timeout_ms = 500, lsp_format = "fallback" }
+        end
+      end
     end,
   },
 }
