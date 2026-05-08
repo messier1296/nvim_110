@@ -13,7 +13,6 @@ return {
             -- disable codelens for Rust buffers.
             client.server_capabilities.codeLensProvider = nil
             if vim.lsp.codelens and vim.lsp.codelens.enable then vim.lsp.codelens.enable(false, { bufnr = bufnr }) end
-            if vim.lsp.inlay_hint then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
           end,
           default_settings = {
             ["rust-analyzer"] = {
@@ -113,9 +112,7 @@ return {
       opts.formatters_by_ft = opts.formatters_by_ft or {}
       opts.formatters_by_ft.rust = { "rustfmt", lsp_format = "fallback" }
       opts.format_on_save = function(bufnr)
-        if vim.bo[bufnr].filetype == "rust" then
-          return { timeout_ms = 500, lsp_format = "fallback" }
-        end
+        if vim.bo[bufnr].filetype == "rust" then return { timeout_ms = 500, lsp_format = "fallback" } end
       end
     end,
   },
