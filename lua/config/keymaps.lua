@@ -8,9 +8,14 @@ vim.keymap.set("n", "<leader>t", "<Cmd>botright 18split | terminal<CR>", {
   desc = "Open terminal in 18-line split",
 })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+vim.keymap.set("n", "H", "^", { desc = "Go to first non-blank character" })
+vim.keymap.set("n", "L", "$", { desc = "Go to end of line" })
 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { noremap = true, silent = true })
+
+vim.keymap.set("v", "H", "^", { desc = "Go to first non-blank character" })
+vim.keymap.set("v", "L", "$", { desc = "Go to end of line" })
