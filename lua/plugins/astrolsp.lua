@@ -132,7 +132,9 @@ return {
       -- ["*"] = function(server) vim.lsp.enable(server) end
 
       -- the key is the server that is being setup with `vim.lsp.config`
-      -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
+      -- Rust LSP is owned by rustaceanvim. If AstroLSP also enables the Mason
+      -- rust_analyzer server, Neovim starts two rust-analyzer clients.
+      rust_analyzer = false,
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
