@@ -11,6 +11,12 @@ return {
 
       lspconfig.tinymist.setup {
         root_dir = resolve_typst_root,
+        on_attach = function(client, bufnr)
+          -- tinymist codelens updates can interfere with insert-mode input in
+          -- the same way rust-analyzer implementation lenses did.
+          client.server_capabilities.codeLensProvider = nil
+          if vim.lsp.codelens and vim.lsp.codelens.enable then vim.lsp.codelens.enable(false, { bufnr = bufnr }) end
+        end,
         on_new_config = function(new_config, root_dir)
           new_config.settings = new_config.settings or {}
           new_config.settings.tinymist = vim.tbl_deep_extend("force", new_config.settings.tinymist or {}, {

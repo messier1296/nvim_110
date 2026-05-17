@@ -177,9 +177,7 @@ return {
     -- A custom `on_attach` function to be run after the default `on_attach` function
     -- takes two parameters `client` and `bufnr`  (`:h lsp-attach`)
     on_attach = function(client, bufnr)
-      if client.name == "ruff" then
-        client.server_capabilities.hoverProvider = false
-      end
+      if client.name == "ruff" then client.server_capabilities.hoverProvider = false end
     end,
   },
 }

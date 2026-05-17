@@ -1,6 +1,9 @@
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-c>", "<Esc>", { noremap = true, silent = true })
 
+vim.keymap.set("n", "<C-h>", "0", { desc = "Move to beginning of line" })
+vim.keymap.set("n", "<C-l>", "$", { desc = "Move to end of line" })
+
 vim.keymap.set("n", "<leader>T", "<cmd>Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
 vim.keymap.set("n", "<C-m>", "<cmd>Neotree reveal<CR>", { desc = "Reveal current file in Neo-tree" })
 vim.keymap.set("n", "<leader>b", "<cmd>Neotree float buffers<CR>", { desc = "Open Neo-tree buffers" })
