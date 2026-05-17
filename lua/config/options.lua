@@ -10,6 +10,7 @@ vim.opt.fileformats = { "unix", "dos", "mac" }
 vim.opt.termguicolors = true
 vim.opt.pumblend = 15
 vim.opt.winblend = 15
-
+vim.opt.encoding = "utf-8"
+vim.opt.fileencodings = "ucs-bom,utf-8,cp932,sjis,euc-jp,latin1"
 vim.o.list = true
 vim.o.listchars = "tab:» ,trail:·,nbsp:+"
