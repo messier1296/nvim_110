@@ -134,7 +134,7 @@ return {
       -- the key is the server that is being setup with `vim.lsp.config`
       -- Rust LSP is owned by rustaceanvim. If AstroLSP also enables the Mason
       -- rust_analyzer server, Neovim starts two rust-analyzer clients.
-      rust_analyzer = false,
+      rust_analyzer = false, -- Rust LSP is managed by rustaceanvim
     },
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
