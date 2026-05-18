@@ -13,6 +13,7 @@ vim.keymap.set("n", "<leader>t", "<Cmd>botright 18split | terminal<CR>", {
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
 vim.keymap.set("n", "H", "^", { desc = "Go to first non-blank character" })
 vim.keymap.set("n", "L", "$", { desc = "Go to end of line" })
+vim.keymap.set("n", "<leader>E", vim.diagnostic.setloclist, { desc = "Diagnostics list" })
 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
