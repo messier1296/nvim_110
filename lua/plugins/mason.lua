@@ -13,6 +13,7 @@ return {
         "astro-language-server",
         "lua-language-server",
         "basedpyright",
+        "clangd",
         "ruff",
         "rust-analyzer",
         "typescript-language-server",

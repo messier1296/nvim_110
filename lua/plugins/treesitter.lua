@@ -14,6 +14,8 @@ return {
       auto_install = true, -- enable/disable automatic installation of detected languages
       ensure_installed = {
         "astro",
+        "c",
+        "cpp",
         "css",
         "html",
         "javascript",

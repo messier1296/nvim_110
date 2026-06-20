@@ -40,6 +40,7 @@ return {
     servers = {
       "astro",
       "basedpyright",
+      "clangd",
       "ruff",
       "ts_ls",
     },
@@ -73,6 +74,15 @@ return {
               useLibraryCodeForTypes = true,
             },
           },
+        },
+      },
+      clangd = {
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--completion-style=detailed",
+          "--header-insertion=iwyu",
         },
       },
       ruff = {
