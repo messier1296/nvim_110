@@ -25,6 +25,12 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
+local lspconfig = require "lspconfig"
+lspconfig.clangd.setup {
+  cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
+  init_options = { fallbackFlags = { "-std=c++17" } },
+}
+
 require "lazy_setup"
 require "polish"
 require "config"

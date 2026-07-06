@@ -41,6 +41,7 @@ return {
       "astro",
       "basedpyright",
       "clangd",
+      "ocamllsp",
       "ruff",
       "ts_ls",
     },
