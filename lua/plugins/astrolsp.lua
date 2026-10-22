@@ -85,6 +85,9 @@ return {
           "--completion-style=detailed",
           "--header-insertion=iwyu",
         },
+        init_options = {
+          fallbackFlags = { "-std=c++17" },
+        },
       },
       tinymist = {
         root_dir = function(bufnr, on_dir)
