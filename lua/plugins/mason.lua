@@ -14,7 +14,6 @@ return {
         "lua-language-server",
         "basedpyright",
         "clangd",
-        "ocaml-lsp",
         "ruff",
         "rust-analyzer",
         "typescript-language-server",
