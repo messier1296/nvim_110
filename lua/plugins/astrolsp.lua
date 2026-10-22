@@ -86,6 +86,30 @@ return {
           "--header-insertion=iwyu",
         },
       },
+      tinymist = {
+        root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          on_dir(vim.fs.root(bufnr, { "typst.toml", ".git", "template.typ" }) or vim.fs.dirname(vim.fn.fnamemodify(fname, ":p")))
+        end,
+        before_init = function(_, config)
+          config.settings = config.settings or {}
+          config.settings.tinymist = vim.tbl_deep_extend("force", config.settings.tinymist or {}, {
+            rootPath = config.root_dir,
+          })
+        end,
+        on_attach = function(client, bufnr)
+          -- tinymist codelens updates can interfere with insert-mode input in
+          -- the same way rust-analyzer implementation lenses did.
+          client.server_capabilities.codeLensProvider = nil
+          if vim.lsp.codelens and vim.lsp.codelens.enable then vim.lsp.codelens.enable(false, { bufnr = bufnr }) end
+        end,
+        settings = {
+          tinymist = {
+            formatterMode = "typstyle",
+            exportPdf = "onSave",
+          },
+        },
+      },
       ruff = {
         init_options = {
           settings = {

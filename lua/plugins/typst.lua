@@ -1,45 +1,10 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      local lspconfig = require "lspconfig"
-      local util = require "lspconfig.util"
-      local function resolve_typst_root(fname)
-        return util.root_pattern("typst.toml", ".git", "template.typ")(fname)
-          or vim.fs.dirname(vim.fn.fnamemodify(fname, ":p"))
-      end
-
-      lspconfig.tinymist.setup {
-        root_dir = resolve_typst_root,
-        on_attach = function(client, bufnr)
-          -- tinymist codelens updates can interfere with insert-mode input in
-          -- the same way rust-analyzer implementation lenses did.
-          client.server_capabilities.codeLensProvider = nil
-          if vim.lsp.codelens and vim.lsp.codelens.enable then vim.lsp.codelens.enable(false, { bufnr = bufnr }) end
-        end,
-        on_new_config = function(new_config, root_dir)
-          new_config.settings = new_config.settings or {}
-          new_config.settings.tinymist = vim.tbl_deep_extend("force", new_config.settings.tinymist or {}, {
-            rootPath = root_dir,
-          })
-        end,
-        settings = {
-          tinymist = {
-            formatterMode = "typstyle",
-            exportPdf = "onSave",
-          },
-        },
-      }
-    end,
-  },
-
-  {
     "chomosuke/typst-preview.nvim",
     ft = "typst",
     opts = function()
-      local util = require "lspconfig.util"
       local function resolve_typst_root(path)
-        return util.root_pattern("typst.toml", ".git", "template.typ")(path)
+        return vim.fs.root(path, { "typst.toml", ".git", "template.typ" })
           or vim.fs.dirname(vim.fn.fnamemodify(path, ":p"))
       end
 
